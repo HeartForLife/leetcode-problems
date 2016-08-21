@@ -38,7 +38,7 @@ class Solution(object):
                 if add == 0:
                     rsl.append([nums[small], nums[mid], nums[big]])
                     cur = nums[big]
-                    while nums[big-1] == cur:
+                    while nums[big-1] == cur:  #防止重复，此处可以使用set，将结果作为字符串存入来防止重复
                         big = big - 1
                         if big <= 0:
                             break
@@ -78,3 +78,7 @@ class Solution(object):
                 else:
                     mid = mid + 1
         return max_add
+
+四、4个数之和为指定值
+
+此时需要使用4个指针，begin，end和中间的mid1和mid2，分别初始化为begin+1和end-1，中间指针的移动方向需要规则，可以每次begin和end之间搜索时mid1增加或减少，mid2只减少，否则可能会导致无限循环
