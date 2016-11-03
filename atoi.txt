@@ -1,17 +1,17 @@
-���ַ���ת��Ϊint����
+将字符串转换为int类型
 
-��Ҫ���ǵ�����Ƚ϶ࣺ
+需要考虑的情况比较多：
 
-1���ַ���Ϊ�գ�����ַ�������
-2���ַ���ǰ���пո��ڴ���ǰȥ��ǰ��ո�
-3����һ���ַ�Ϊ"+"����"-"����Ҫ�жϵ�һ�����ţ�����¼
-4������жϣ�int�����ֵΪ0x7fffffff����СֵΪ-0x80000000����������򷵻���������Сֵ
+1、字符串为空，检查字符串长度
+2、字符串前后有空格，在处理前去掉前后空格
+3、第一个字符为"+"或者"-"，需要判断第一个符号，并记录
+4、溢出判断，int的最大值为0x7fffffff，最小值为-0x80000000，若溢出，则返回最大或者最小值
 
-�ο����룺
+参考代码：
 
 class Solution(object):
     def myAtoi(self, str):
-        str = str.strip()   #ȥ���ո�
+        str = str.strip()   #去掉空格
         if len(str) <= 0:
             return 0
         if len(str) == 1:
@@ -19,8 +19,8 @@ class Solution(object):
                 return int(str)
             else:
                 return 0
-        sign = 1    #��¼����
-        start = 0   #��¼���ֿ�ʼ��λ��
+        sign = 1    #记录符号
+        start = 0   #记录数字开始的位置
         if str[0] == '+':
             start = 1
         elif str[0] == '-':
@@ -32,7 +32,7 @@ class Solution(object):
                 rsl = rsl * 10 + int(str[i])
             else:
                 break
-		#��������ж�
+		#带上溢出判断
         if rsl >= 0x7fffffff and sign > 0:
             return 0x7fffffff
         elif sign < 0 and rsl >= 0x80000000:

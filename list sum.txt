@@ -1,26 +1,26 @@
-��������Ϊ�����б�����������3�����ĺ�Ϊָ��ֵ
+该类问题为给定列表中两个或者3个数的和为指定值
 
-һ��2��������������б����ҵ������������Ϊָ��ֵ
+一、2个数的情况，在列表中找到两个数，其和为指定值
 
-�ɲ������ַ�ʽ��
-��һ�ַ�ʽʹ��set���ڱ����б�ʱ��ָ��ֵ�뵱ǰֵ�Ĳ�ֵ����set�У�����ʱ�鿴��ǰֵ�Ƿ���set�У������set�У����������ĺ�Ϊָ��ֵ
-�÷�ʽʱ�临�Ӷ�ΪO(n)���ռ临�Ӷ�ΪO(n)
+可采用两种方式：
+第一种方式使用set，在遍历列表时将指定值与当前值的差值存入set中，遍历时查看当前值是否在set中，如果在set中，则这两个的和为指定值
+该方式时间复杂度为O(n)，空间复杂度为O(n)
 
-�ڶ��ַ�ʽ��������������ָ�룬begin��end���ֱ�ָ���б��е�һ�������һ����һֱ��������ָ��ָ�������֮�ͣ����С��ָ��ֵ����beginǰ��һλ��������ָ��ֵ����end����һλ��ֱ�����ߵĺ͵���ָ��ֵ
-�÷�ʽ������Ҫ���򣬹�ʱ�临�Ӷ�ΪO(nlogn)���ռ临�Ӷ�ΪO(1)
+第二种方式先排序，设置两个指针，begin和end，分别指向列表中第一个和最后一个，一直计算两个指针指向的数据之和，如果小于指定值，则begin前移一位，若大于指定值，则end后移一位，直到两者的和等于指定值
+该方式由于需要排序，故时间复杂度为O(nlogn)，空间复杂度为O(1)
 
-����3���������
+二、3个数的情况
 
-1��3����֮��Ϊָ��ֵ
-������ͬ������begin��endָ�룬�ֱ�ָ���һ�������һ������������һ���м�ָ��mid����ʼ��Ϊbegin+1
-���3�����ĺͣ������С��ָ��ֵ����mid����1����ǰ��һλ�����mid�Ѿ���end��ǰһλ����mid�޷������ӣ���ʱbeginǰ��һλ��mid����Ϊbegin+1
-����ʹ���ָ��ֵ����endǰ��һλ��mid����Ϊbegin+1
-�÷�ʽʱ�临�Ӷ�ΪO(n^2)���ռ临�Ӷ�ΪO(1)
+1、3个数之和为指定值
+先排序，同样设置begin和end指针，分别指向第一个和最后一个，另外增加一个中间指针mid，初始化为begin+1
+求出3个数的和，如果和小于指定值，则mid增加1，即前移一位，如果mid已经在end的前一位，则mid无法再增加，此时begin前移一位，mid重设为begin+1
+如果和大于指定值，则end前移一位，mid重设为begin+1
+该方式时间复杂度为O(n^2)，空间复杂度为O(1)
 
-��Ŀ����:
+题目描述:
 Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
 
-�ο�����(python)��
+参考代码(python)：
 class Solution(object):
     def threeSum(self, nums):
         rsl = []
@@ -38,7 +38,7 @@ class Solution(object):
                 if add == 0:
                     rsl.append([nums[small], nums[mid], nums[big]])
                     cur = nums[big]
-                    while nums[big-1] == cur:  #��ֹ�ظ����˴�����ʹ��set���������Ϊ�ַ�����������ֹ�ظ�
+                    while nums[big-1] == cur:  #防止重复，此处可以使用set，将结果作为字符串存入来防止重复
                         big = big - 1
                         if big <= 0:
                             break
@@ -51,13 +51,13 @@ class Solution(object):
                     mid = mid + 1
         return rsl
 		
-����3����֮����ӽ�������
-��3����֮�����ƣ�ֻ��ÿ�����ʱ��ָ��ֵ�Ƚϣ���¼��ֵ���ҵ���ֵ��С���Ǹ���ͨ���ȽϺ���ָ��ֵ�Ĵ�С���ƶ���ǰ��ָ�룬�Լӿ��ٶ�
+三、3个数之和最接近的问题
+与3个数之和类似，只是每次求和时与指定值比较，记录差值，找到差值最小的那个，通过比较和与指定值的大小来移动当前的指针，以加快速度
 
-��Ŀ������
+题目描述：
 Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers
 
-�ο�����(python)��
+参考代码(python)：
 class Solution(object):
     def threeSumClosest(self, nums, target):
         nums.sort()
@@ -79,6 +79,6 @@ class Solution(object):
                     mid = mid + 1
         return max_add
 
-�ġ�4����֮��Ϊָ��ֵ
+四、4个数之和为指定值
 
-��ʱ��Ҫʹ��4��ָ�룬begin��end���м��mid1��mid2���ֱ��ʼ��Ϊbegin+1��end-1���м�ָ����ƶ�������Ҫ���򣬿���ÿ��begin��end֮������ʱmid1���ӻ���٣�mid2ֻ���٣�������ܻᵼ������ѭ��
+此时需要使用4个指针，begin，end和中间的mid1和mid2，分别初始化为begin+1和end-1，中间指针的移动方向需要规则，可以每次begin和end之间搜索时mid1增加或减少，mid2只减少，否则可能会导致无限循环
