@@ -41,7 +41,7 @@ vector<int> inorderTraversal(TreeNode* root) {
     vector<int> nodes;
     inorder(root, nodes);
     return nodes;
-} 
+}
 Morris traversal:
 
 vector<int> inorderTraversal(TreeNode* root) {
@@ -69,3 +69,40 @@ vector<int> inorderTraversal(TreeNode* root) {
     }
     return nodes;
 }
+
+preorder:
+
+class Solution(object):
+    def preorderTraversal(self, root):
+        rsl = []
+        tovisit = []
+        while root != None or len(tovisit) > 0:
+            if root != None:
+                rsl.append(root.val)
+                if root.right != None:
+                    tovisit.append(root.right)
+                root = root.left
+            else:
+                root = tovisit.pop(-1)
+                rsl.append(root.val)
+                if root.right != None:
+                    tovisit.append(root.right)
+                root = root.left
+        return rsl
+
+
+postorder:
+
+class Solution(object):
+    def postorderTraversal(self, root):
+        rsl = []
+        tovisit = []
+        while root != None or len(tovisit) > 0:
+            if root != None:
+                rsl.insert(0, root.val)
+                if root.left != None:
+                    tovisit.append(root.left)
+                root = root.right
+            else:
+                root = tovisit.pop(-1)
+        return rsl
