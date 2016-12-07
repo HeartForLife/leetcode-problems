@@ -1,0 +1,62 @@
+merge sort list
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+def merge_list(head):
+    if head == None or head.next == None:
+        return head
+    h = head
+    p = head
+    q = p.next
+    while q != None:
+        q = q.next
+        if q != None:
+            p = p.next
+            q = q.next
+    if q == p:
+        return p
+    hp = p.next
+    p.next = None
+    h = merge_list(h)
+    hp = merge_list(hp)
+    hh = merge(h, hp)
+    return hh
+
+def merge(head1, head2):
+    if head1 == None:
+        return head2
+    if head2 == None:
+        return head1
+    rsl = None
+    if head1.val <= head2.val:
+        rsl = head1
+        head1.next = merge(head1.next, head2)
+    else:
+        rsl = head2
+        head2.next = merge(head1, head2.next)
+    return rsl
+
+def ltol(head):
+    if len(head) == 0:
+        return None
+
+    rsl = [ListNode(i) for i in head]
+    for i in range(len(head) - 1):
+        rsl[i].next = rsl[i+1]
+    rsl[-1].next = None
+    return rsl[0]
+
+def print_lst(head):
+    p = head
+    rsl = []
+    while p != None:
+        rsl.append(p.val)
+        p = p.next
+    print(rsl)
+
+a = [3,4,6,2,7,2,9,1,0]
+head = ltol(a)
+head = merge_list(head)
+print_lst(head)
